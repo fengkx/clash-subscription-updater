@@ -40,6 +40,7 @@ func init() {
 		viper.Set("subscription-url", url)
 	}
 	if viper.GetBool("override") {
+		viper.Set("override", false)
 		viper.WriteConfig()
 	}
 }
