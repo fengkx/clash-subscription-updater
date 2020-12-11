@@ -3,6 +3,7 @@ package main
 import (
 	"clash-subscription-updater/overider"
 	"clash-subscription-updater/updater"
+	"fmt"
 	"github.com/jasonlvhit/gocron"
 	"github.com/mitchellh/mapstructure"
 	"github.com/spf13/pflag"
@@ -12,6 +13,9 @@ import (
 	"strings"
 )
 
+func printVersion() {
+	fmt.Print("<%VERSION%>")
+}
 func init() {
 	viper.SetConfigName("clash-subscription-updater")
 	viper.AddConfigPath("$HOME/.config")
@@ -22,6 +26,7 @@ func init() {
 	pflag.IntP("interval", "i", 60, "interval to fetch configuration (minutes)")
 	pflag.BoolP("help", "h", false, "show this message")
 	pflag.Bool("override", false, "override the existed config file")
+	pflag.BoolP("version", "v", false, "show current version")
 	pflag.Parse()
 	viper.BindPFlags(pflag.CommandLine)
 	if err != nil {
@@ -39,7 +44,7 @@ func init() {
 	if url := pflag.Arg(0); url != "" {
 		viper.Set("subscription-url", url)
 	}
-	if viper.GetBool("override") {
+	if viper.GetBool("override") && !viper.GetBool("help") && !viper.GetBool("version") {
 		viper.Set("override", false)
 		viper.WriteConfig()
 	}
@@ -48,6 +53,12 @@ func init() {
 func main() {
 	if viper.GetBool("help") {
 		pflag.PrintDefaults()
+		return
+	}
+	if viper.GetBool("version") {
+		fmt.Printf("version: ")
+		printVersion()
+		fmt.Println()
 		return
 	}
 	url := viper.GetString("subscription-url")
