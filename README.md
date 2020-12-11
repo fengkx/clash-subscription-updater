@@ -1,12 +1,21 @@
 # clash subscription updater
 > Update the clash `config.yaml` peroidly with optional patch
 
+## Install
+### ArchLinux
+Install from AUR `clash-subscription-updater-git`
+```sh
+yay -S clash-subscription-updater-git
+```
+
 ## Usage
 ```shell
--d, --clash-config-dir string   config directory of clash (default "$HOME/.config/clash")
+-d, --clash-config-dir string    config directory of clash (default "/home/fengkx/.config/clash")
 -h, --help                      show this message
 -i, --interval int              interval to fetch configuration (minutes) (default 60)
     --override                  override the existed config file
+-v, --version                   show current version
+
 ```
 
 It will init a config file in `$HOME/.config/clash-subscription-updater.yaml`
