@@ -91,6 +91,7 @@ func main() {
 			log.Printf("Updated to %s | patch: proxies(+%d) rules(+%d)", configDir, len(proxies), len(rules))
 		}
 	}
+	task()
 	s := gocron.NewScheduler()
 	s.Every(uint64(viper.GetInt("interval"))).Minute().Do(task)
 	<-s.Start()
